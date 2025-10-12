@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Receipt</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Test Receipt Functionality</h2>
+        <button class="btn btn-info" onclick="testReceipt()">Test Receipt</button>
+        
+        <!-- Receipt Modal -->
+        <div class="modal fade-scale" id="receiptModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Order Receipt</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="receiptContent">
+                            <!-- Receipt content will be loaded here -->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="printReceipt">Print</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var orderDetailsApiUrl = 'http://127.0.0.1:5000/getOrderDetails';
+        
+        function testReceipt() {
+            console.log('Testing receipt...');
+            
+            // Test with order ID 14
+            $.get(orderDetailsApiUrl + '?order_id=19', function (response) {
+                console.log('Response:', response);
+                if(response) {
+                    var receiptHtml = generateReceiptHtml(response);
+                    $('#receiptContent').html(receiptHtml);
+                    $('#receiptModal').modal('show');
+                } else {
+                    alert('No order details found for this order.');
+                }
+            }).fail(function(xhr, status, error) {
+                console.log('Error:', error);
+                console.log('Status:', status);
+                console.log('Response:', xhr.responseText);
+                alert('Error loading order details: ' + error);
+            });
+        }
+        
+        // Generate receipt HTML
+        function generateReceiptHtml(orderDetails) {
+            // Format the datetime
+            var orderDate = new Date(orderDetails.Datetime).toLocaleString();
+            
+            var receiptHtml = `
+                <div class="receipt" style="font-family: monospace; padding: 20px;">
+                    <div class="text-center" style="margin-bottom: 20px;">
+                        <h3>GROCERY STORE</h3>
+                        <p>Order Receipt</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <p><strong>Order ID:</strong> ${orderDetails.order_id}</p>
+                        <p><strong>Customer:</strong> ${orderDetails.customer_name}</p>
+                        <p><strong>Date:</strong> ${orderDate}</p>
+                    </div>
+                    
+                    <hr>
+                    
+                    <table class="table table-bordered" style="margin-bottom: 20px;">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
+            
+            if(orderDetails.order_details && orderDetails.order_details.length > 0) {
+                orderDetails.order_details.forEach(function(item) {
+                    var productName = item.product_name ? item.product_name.trim() : 'Product';
+                    receiptHtml += `
+                        <tr>
+                            <td>${productName}</td>
+                            <td>${item.quantity}</td>
+                            <td>${item.unit_price || '0.00'} EGP</td>
+                            <td>${item.total_price} EGP</td>
+                        </tr>`;
+                });
+            }
+            
+            receiptHtml += `
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="3">Grand Total:</th>
+                                <th>${orderDetails.total} EGP</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    
+                    <div class="text-center" style="margin-top: 30px;">
+                        <p>Thank you for your business!</p>
+                    </div>
+                </div>`;
+            
+            return receiptHtml;
+        }
+        
+        // Print Receipt functionality
+        $(document).on("click", "#printReceipt", function (){
+            var printContent = $('#receiptContent').html();
+            var originalContent = document.body.innerHTML;
+            
+            document.body.innerHTML = printContent;
+            window.print();
+            document.body.innerHTML = originalContent;
+            
+            // Reload the page to restore functionality
+            location.reload();
+        });
+    </script>
+</body>
+</html>
