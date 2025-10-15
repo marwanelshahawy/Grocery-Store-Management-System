@@ -7,7 +7,12 @@ from sql_connection import get_sql_connection
 
 
 app =Flask(__name__)
+
 connection = get_sql_connection()
+
+##                                Products APIs                               ##
+
+## Get Products API
 @app.route("/getProducts", methods=['GET'])
 def get_product():
     products=products_dao.get_all_products(connection)
@@ -15,6 +20,7 @@ def get_product():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+## delete Product API
 @app.route("/deleteProduct",methods=['POST'])
 def del_product():
     return_id = products_dao.delet_product(connection,request.form['product_id'])
@@ -26,6 +32,7 @@ def del_product():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+## Insert Product API
 @app.route("/insertProduct",methods=['POST'])
 def insert_product():
     requestpayload = json.loads(request.form['data'])
@@ -38,6 +45,7 @@ def insert_product():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+## Get UOM API
 @app.route("/getUOM", methods=['GET'])
 def get_uoms():
     uoms=uom_dao.get_uoms(connection)
@@ -45,6 +53,7 @@ def get_uoms():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+## Edit Product API
 @app.route("/editProduct",methods=['POST'])
 def edit_product():
     requestpayload = {
@@ -62,6 +71,9 @@ def edit_product():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+##                                Orders APIs                               ##
+
+## Get Orders API
 @app.route("/getAllOrders", methods=['GET'])
 def get_all_orders():
     orders=orders_dao.get_all_orders(connection)
@@ -69,10 +81,10 @@ def get_all_orders():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+## Insert Order API
 @app.route("/insertOrder",methods=['POST'])
 def insert_order():
     requestpayload = json.loads(request.form['data'])
-    print(requestpayload)
     return_id=orders_dao.insert_order(connection,requestpayload)
     response = jsonify(
         {
@@ -82,14 +94,16 @@ def insert_order():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+## Get Order Details API
 @app.route("/getOrderDetails", methods=['GET'])
 def get_order_details():
     order_id = request.args.get('order_id')
     order_details = orders_dao.get_order_details(connection, order_id)
     response = jsonify(order_details)
-    print(response)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
+
+
 if __name__=="__main__":
     app.run(debug=True)
 

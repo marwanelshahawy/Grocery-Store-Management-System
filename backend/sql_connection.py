@@ -1,5 +1,7 @@
 import pyodbc as db
+
 __conn = None
+
 def get_sql_connection():
     global __conn
     if __conn is None:

@@ -1,4 +1,5 @@
 from sql_connection import get_sql_connection
+
 def get_all_products(connection):
    
     cursor = connection.cursor()
@@ -27,16 +28,21 @@ def insert_new_product(connection,product):
     cursor = connection.cursor()
     data = (product['name'],product['uom_id'],product['price_per_unit'])
     query='''INSERT INTO products(name,uom_id,price_per_unit) 
-    OUTPUT INSERTED.product_id
-    VALUES(?,?,?)'''
+             OUTPUT INSERTED.product_id
+             VALUES(?,?,?)'''
 
     cursor.execute(query,data)
+
     last_id = cursor.fetchone()[0]
+
     connection.commit()
+
     return last_id
     
 def edit_product(connection,product):
+
     cursor = connection.cursor()
+
     data = (
     product['name'],
     product['uom_id'],
@@ -45,18 +51,21 @@ def edit_product(connection,product):
     )
 
     query='''UPDATE products
-    SET name = ?, uom_id = ?, price_per_unit = ?
-    WHERE product_id = ? 
-    '''
+             SET name = ?, uom_id = ?, price_per_unit = ?
+             WHERE product_id = ?'''
 
     cursor.execute(query,data)
+
     connection.commit()
+
     return product['product_id']
     
 def delet_product(connection,product_id):
+
     cursor = connection.cursor()
+
     query='''DELETE FROM products
-    WHERE product_id=?'''
+             WHERE product_id=?'''
 
     cursor.execute(query,product_id)
     
@@ -71,9 +80,9 @@ if __name__=="__main__":
     #     'uom_id': '1',
     #     'price_per_unit': 10
     # }))
-    print(edit_product(connection,{
-        'name': 'Oil',
-        'uom_id': '2',
-        'price_per_unit': 55,
-        'product_id':39
-    }))
+    # print(edit_product(connection,{
+    #     'name': 'Oil',
+    #     'uom_id': '2',
+    #     'price_per_unit': 55,
+    #     'product_id':39
+    # }))
