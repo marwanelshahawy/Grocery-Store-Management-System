@@ -84,9 +84,9 @@ Grocery Store project/
 ## 🧱 Technologies Used
 | Layer          | Technology Stack               |
 | -------------- | ------------------------------ |
-| **Backend**    | Python (Flask / Custom Server) |
-| **Frontend**   | HTML, CSS, JavaScript, jQuery  |
-| **Database**   | MySQL / SQLite (via DAO layer) |
+| **Backend**    | Python (Flask)                 |
+| **Frontend**   | HTML, CSS, JavaScript          |
+| **Database**   | SQLSERVER (via DAO layer)      |
 | **Versioning** | Git, GitHub                    |
 
 ## Contributing
