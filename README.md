@@ -1,16 +1,44 @@
-# Grocery Store Project
+# 🛒 Grocery Store Management System
 
-This project is a simple grocery store management system built with Python. It provides both backend and frontend components to manage products, orders, and units of measurement (UOM) for a grocery store.
+A **complete grocery store management system** built with **Python (Flask)** for the backend and a **modern web interface** (HTML, CSS, JavaScript, jQuery) for the frontend.  
+This project allows you to **manage products, units of measurement, and customer orders** efficiently through a clean and user-friendly interface.
 
-## Features
+---
 
-- **Product Management:** Add, update, and delete products.
-- **Order Management:** Create and manage customer orders.
-- **Units of Measurement:** Manage units for products (e.g., kg, liter).
-- **Backend:** Python-based server with data access objects (DAO) for products, orders, and UOM.
-- **Frontend:** User interface for managing products and orders, built with HTML, CSS, and JavaScript.
+## 🚀 Overview
 
-## Project Structure
+The **Grocery Store Management System** is designed to help store owners and staff manage daily operations digitally —  
+including managing products, units (like kg, liter, piece), and handling customer orders.  
+
+The system is split into two main parts:
+- 🖥️ **Frontend:** HTML, CSS, and JavaScript interface for easy management.  
+- ⚙️ **Backend:** Python-based REST API handling database operations.
+
+---
+
+## ✨ Key Features
+
+✅ **Product Management**  
+- Add, edit, and delete products.  
+- Assign units of measurement and price per unit.  
+
+✅ **Order Management**  
+- Create and manage customer orders easily.  
+- View and calculate totals automatically.  
+
+✅ **Units of Measurement (UOM)**  
+- Add and manage units (kg, liter, box, etc.).  
+
+✅ **Backend API Integration**  
+- Python server handles CRUD operations via a structured DAO layer.  
+
+✅ **Simple & Responsive UI**  
+- Built with HTML, CSS, and jQuery for smooth interactivity.  
+
+---
+
+## 📂 Project Structure
+
 
 ```
 Grocery Store project/
@@ -20,7 +48,7 @@ Grocery Store project/
 │   ├── server.py
 │   ├── sql_connection.py
 │   ├── uom_dao.py
-│   └── __pycache__/
+│   
 ├── ui/
 │   ├── index.html
 │   ├── manage-product.html
@@ -40,24 +68,34 @@ Grocery Store project/
 ### Installation
 1. Clone the repository:
 	```powershell
-	git clone <repository-url>
+	git clone https://github.com/marwanelshahawy/Grocery-Store-Management-System.git
 	```
-2. Install dependencies:
-	```powershell
-	pip install -r requirements.txt
-	```
-3. Run the backend server:
+
+2. Run the backend server:
 	```powershell
 	python backend/server.py
 	```
-4. Open `ui/index.html` in your browser to access the frontend.
+3. Open `ui/index.html` in your browser to access the frontend.
 
 ## Usage
 - Use the UI to manage products and orders.
 - Backend APIs handle data storage and retrieval.
 
+## 🧱 Technologies Used
+| Layer          | Technology Stack               |
+| -------------- | ------------------------------ |
+| **Backend**    | Python (Flask / Custom Server) |
+| **Frontend**   | HTML, CSS, JavaScript, jQuery  |
+| **Database**   | MySQL / SQLite (via DAO layer) |
+| **Versioning** | Git, GitHub                    |
+
 ## Contributing
-Contributions are welcome! Please fork the repository and submit a pull request.
+Contributions are welcome!
+If you’d like to improve this project:
+1. Fork the repository
+2. Create a new branch (feature/your-feature-name)
+3. Commit your changes
+4. Push to your fork and submit a Pull Request
 
 ## License
 This project is licensed under the MIT License.
